@@ -6,7 +6,7 @@ const Default = ({ children }) => {
   return (
     <>
         <Header />
-            <Container maxWidth="lg" sx={{ background: "#eee"}}> 
+            <Container maxWidth="lg"> 
                 { children }
             </Container>
          
