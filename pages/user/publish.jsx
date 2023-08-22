@@ -4,11 +4,13 @@ import {
     Box,
     Button,
     Container, 
+    IconButton, 
     Select, 
     TextField, 
     Typography 
 } from '@mui/material'
 import theme from '../../src/theme'
+import { DeleteForever } from '@mui/icons-material'
 
 const Publish = () => {
   return (
@@ -84,6 +86,69 @@ const Publish = () => {
                 <Typography component="div" variant="body2" color="textPrimary">
                     A primeira imagem e a foto principal do seu anuncio.
                 </Typography>
+
+                {/* Thumbs COntainer  */}
+                <Box sx={{ display: 'flex', gap: '1rem', marginTop: '1rem'}}>
+                    {/*  DropZone Place */}
+                    <Box 
+                    sx={{ 
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        textAlign: 'center',
+                        padding: '.8rem',
+                        margin: '0 15px 15px 0',
+                        width: '200px', 
+                        height: '150px', 
+                        backgroundColor: theme.palette.background.default,
+                        border: '2px dashed #111'
+                    }}>
+                        <Typography variant="body2" color="textPrimary">
+                            Clique para adicionar ou arraste a imagem aqui.
+                        </Typography>
+                    </Box>
+
+                    {/* Thumb Container  */}
+                    <Box 
+                        sx={{ 
+                            width: '200px', 
+                            height: '150px', 
+                            position: 'relative',
+                            background: 'url(https://source.unsplash.com/random)',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center center',
+                            '> hover': 'flex' 
+                        }}>
+
+                        {/* Box Main - image  */}
+                        <Box 
+                        sx={{
+                            position:'absolute',
+                            background: 'blue',
+                            bottom: '0',
+                            left: '0',
+                            padding: '.5rem'
+                        }}>
+                            <Typography variant='body2' color='secondary'>Principal</Typography>
+                        </Box>
+
+                        {/* Box Mask - garbage  */}
+                        <Box sx={{ 
+                            width: '100%',
+                            height: '100%',
+                            background: 'rgba(0, 0, 0, 0.7)',
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', 
+
+                        }}>
+                            <IconButton color="secondary">
+                                <DeleteForever fontSize="large" />
+                            </IconButton>
+                        </Box>
+                    </Box>
+
+                </Box>
             </Box>
         </Container>
 
@@ -149,6 +214,7 @@ const Publish = () => {
                 />
             </Box>
         </Container>
+
         <Container maxWidth="md" sx={{ marginTop: '2rem'}}>
             <Box textAlign="right">
                 <Button variant='contained' color="primary">
