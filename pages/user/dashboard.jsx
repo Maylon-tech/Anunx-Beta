@@ -13,7 +13,7 @@ import TemplateDefault from '../../src/templates/Default'
 export default function Home() {
   return (
     <TemplateDefault>
-      <Container sx={{ padding: '3rem',}} maxWidth="sm">
+      <Container maxWidth="sm">
         <Typography component="h1" variant="h2" align="center">
           Meus Anuncios
         </Typography>

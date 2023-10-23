@@ -11,11 +11,35 @@ import {
 } from '@mui/material'
 import theme from '../../src/theme'
 import { DeleteForever } from '@mui/icons-material'
+import styled from '@emotion/styled'
+
+const ThumbContainerImage = styled('div')({
+    width: '200px', 
+    height: '150px', 
+    position: 'relative',
+    background: 'url(https://source.unsplash.com/random)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+    '&:hover ~ $ThumbRemoveBox': {
+        display: 'flex'
+    }
+})
+
+const ThumbRemoveBox = styled('div')({
+    width: '100%',
+    height: '100%',
+    background: 'red',
+    display: 'none', 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    position: 'absolute'
+})
+
 
 const Publish = () => {
   return (
     <TemplateDefault>
-        <Container maxWidth='sm' sx={{ padding: '3rem'}}>
+        <Container maxWidth='sm' >
             <Typography component="h1" variant="h2" align="center" color="textPrimary">
                 Publicar Anuncio
             </Typography>
@@ -91,62 +115,47 @@ const Publish = () => {
                 <Box sx={{ display: 'flex', gap: '1rem', marginTop: '1rem'}}>
                     {/*  DropZone Place */}
                     <Box 
-                    sx={{ 
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        textAlign: 'center',
-                        padding: '.8rem',
-                        margin: '0 15px 15px 0',
-                        width: '200px', 
-                        height: '150px', 
-                        backgroundColor: theme.palette.background.default,
-                        border: '2px dashed #111'
-                    }}>
+                        sx={{ 
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            textAlign: 'center',
+                            padding: '.8rem',
+                            margin: '0 15px 15px 0',
+                            width: '200px', 
+                            height: '150px', 
+                            backgroundColor: theme.palette.background.default,
+                            border: '2px dashed #111'
+                        }}
+                    >
                         <Typography variant="body2" color="textPrimary">
                             Clique para adicionar ou arraste a imagem aqui.
                         </Typography>
                     </Box>
 
                     {/* Thumb Container  */}
-                    <Box 
-                        sx={{ 
-                            width: '200px', 
-                            height: '150px', 
-                            position: 'relative',
-                            background: 'url(https://source.unsplash.com/random)',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center center',
-                            '> hover': 'flex' 
-                        }}>
+                    <ThumbContainerImage>
 
                         {/* Box Main - image  */}
                         <Box 
-                        sx={{
-                            position:'absolute',
-                            background: 'blue',
-                            bottom: '0',
-                            left: '0',
-                            padding: '.5rem'
-                        }}>
+                            sx={{
+                                position:'absolute',
+                                background: 'darkblue',
+                                bottom: '0',
+                                left: '0',
+                                padding: '.5rem'
+                            }}
+                        >
                             <Typography variant='body2' color='secondary'>Principal</Typography>
                         </Box>
 
                         {/* Box Mask - garbage  */}
-                        <Box sx={{ 
-                            width: '100%',
-                            height: '100%',
-                            background: 'rgba(0, 0, 0, 0.7)',
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            justifyContent: 'center', 
-
-                        }}>
+                        <ThumbRemoveBox>
                             <IconButton color="secondary">
                                 <DeleteForever fontSize="large" />
                             </IconButton>
-                        </Box>
-                    </Box>
+                        </ThumbRemoveBox>
+                    </ThumbContainerImage>
 
                 </Box>
             </Box>
