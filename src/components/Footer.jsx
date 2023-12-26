@@ -22,7 +22,7 @@ const Footer = () => {
         <Grid container spacing={3}>
             <Grid item xs={6} sm={3}>
                 <Box textAlign="center">
-                    <Link href="#">
+                    <Link style={{ textDecoration: 'none' }} passHref href="#">
                         <Typography color="textSecondary" variant='subtitle1' underline='none'>
                             Ajuda e Contato
                         </Typography>
@@ -31,7 +31,7 @@ const Footer = () => {
             </Grid>
             <Grid item xs={6} sm={3}>
                 <Box textAlign="center">
-                    <Link href="#">
+                    <Link style={{ textDecoration: 'none' }} passHref href="#">
                         <Typography color="textSecondary" variant='subtitle1' underline='none'>
                             Dicas de seguranca
                         </Typography>
@@ -40,7 +40,7 @@ const Footer = () => {
             </Grid>
             <Grid item xs={6} sm={3}>
                 <Box textAlign="center">
-                    <Link href="#">
+                    <Link style={{ textDecoration: 'none' }} passHref href="#">
                         <Typography color="textSecondary" variant='subtitle1' underline='none'>
                             Anunciar e Vender
                         </Typography>
@@ -49,7 +49,7 @@ const Footer = () => {
             </Grid>
             <Grid item xs={6} sm={3}>
                 <Box textAlign="center">
-                    <Link href="#">
+                    <Link style={{ textDecoration: 'none' }} passHref href="#">
                         <Typography color="textSecondary" variant='subtitle1' underline='none'>
                             Plano Profissional
                         </Typography>

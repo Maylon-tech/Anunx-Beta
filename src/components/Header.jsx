@@ -30,22 +30,25 @@ export default function ButtonAppBar() {
         <Container maxWidth="lg">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Anunx
+              <Link style={{ textDecoration: 'none', color: 'white'}} href="/">Anunx</Link>
             </Typography>
 
-            <Link href="/user/publish" >
+            {/* Botao ir Para Publish - Publicar Anuncio */}
+            <Link href="/user/publish" passHref>
               <Button color="secondary" variant='outlined'>
                 Anunciar e Vender
               </Button>
             </Link>
 
+            {/* Button Menu e Log In + Avatar */}
             <IconButton 
               color='secondary' 
               sx={{ marginLeft: '15px'}} 
               onClick={(e) => setAnchorUserMenu(e.currentTarget)}
             >
+              {/* Logica para carregar Avatar - Se logado - senao. */}
               {
-                true === false
+                true === false  // Ainda generico. will Fix
                 ? <Avatar src="" />
                 : <AccountCircle />
               }
