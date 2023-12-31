@@ -1,5 +1,8 @@
 import React from 'react'
+import axios from 'axios'
 import { Formik } from 'formik'
+import { useRouter } from 'next/router'
+
 import {
   Box,
   Container,
@@ -8,13 +11,37 @@ import {
   InputLabel,
   Input,
   FormHelperText,
-  Button
+  Button,
+  CircularProgress,
 } from '@mui/material'
-import TemplateDefault from '../../src/templates/Default'
-import theme from '../../src/theme'
+import TemplateDefault from '../../../src/templates/Default'
+import theme from '../../../src/theme'
+import useToasty from '../../../src/contexts/Toasty'
 import { initialValues, validationSchema } from './formValues'
 
 const Signup = () => {
+  const router = useRouter()
+  const { setToasty } = useToasty()
+
+  const handleFormSubmit = async values => {
+    const response = await axios.post('/api/users', values)
+    console.log(response)
+
+    if (response.data.success) {
+      console.log("dados cadastrados com sucesso.!")
+
+      // toast modal - contextAPI
+      setToasty({
+        open: true,
+        severity: 'success',
+        text: 'Cadastro realizado com sucesso.!'
+      })
+      // redirect
+      router.push('/auth/signin')
+    }
+  }
+
+
   return (
     <TemplateDefault>
       <Container 
@@ -35,9 +62,7 @@ const Signup = () => {
           <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={(values) => {
-                console.log('Ok form Enviado!', values)
-              }}
+              onSubmit={handleFormSubmit}
           >
             {
               ({
@@ -45,7 +70,8 @@ const Signup = () => {
                 values, 
                 errors,                
                 handleChange,
-                handleSubmit
+                handleSubmit,
+                isSubmitting,
               }) => {
                 return (
                   <form onSubmit={handleSubmit}>
@@ -99,15 +125,23 @@ const Signup = () => {
                       </FormHelperText>
                     </FormControl>
 
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      sx={{ marginTop: '1.2rem'}}
-                    >
-                      Cadastrar
-                    </Button>
+                    {
+                      isSubmitting
+                        ? (
+                          <CircularProgress sx={{ display:'block', margin: '10px auto'}} />
+                        ) : (
+                          <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            sx={{ marginTop: '1.2rem'}}
+                          >
+                            Cadastrar
+                          </Button>
+                        )
+                    }
+
                   </form>
                 )
               }

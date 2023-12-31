@@ -11,9 +11,9 @@ import {
   FormHelperText,
   Button
 } from '@mui/material'
-import TemplateDefault from '../../src/templates/Default'
-import theme from '../../src/theme'
-import { initialValues, validationSchema } from './formValues'
+import TemplateDefault from '../../../src/templates/Default'
+import theme from '../../../src/theme'
+import { initialValues, validationSchema } from '../signup/formValues'
 
 const Signin = () => {
   return (
