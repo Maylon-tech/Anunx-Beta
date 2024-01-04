@@ -24,8 +24,8 @@ const Signup = () => {
   const { setToasty } = useToasty()
 
   const handleFormSubmit = async values => {
+    console.log("Ok deu certo chefe 1#")
     const response = await axios.post('/api/users', values)
-    console.log(response)
 
     if (response.data.success) {
       console.log("dados cadastrados com sucesso.!")
@@ -39,6 +39,7 @@ const Signup = () => {
       // redirect
       router.push('/auth/signin')
     }
+    console.log("Ok deu certo Final. 2#")
   }
 
 

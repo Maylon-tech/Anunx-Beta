@@ -18,10 +18,10 @@ const compare = (pwd, hash) => {
 
 
 
-// Functin para Descriptografar senha
+// Function para Descriptografar senha
 
 
 export {
     crypto,
-    compare
+    compare,
 }

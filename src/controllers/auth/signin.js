@@ -1,6 +1,6 @@
-import UsersModel from '../models/users'
-import dbConnect from '../utils/dbConnect'
-import { compare } from '../utils/password'
+import UsersModel from '../../models/users'
+import dbConnect from '../../utils/dbConnect'
+import { compare } from '../../utils/password'
 
 const post = async (req, res) => {
     const {
@@ -17,7 +17,7 @@ const post = async (req, res) => {
         return res.status(401).json({ success: false, message: 'Invalid ' })  // Usuario nao exite
     }
 
-    const passIsCorrect = compare(password, user.password)
+    const passIsCorrect = compare(password, user.password)  // Compara os Password para fazer Login. 
 
     if (passIsCorrect) {
         return res.status(200).json({

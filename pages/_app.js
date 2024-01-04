@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ToastyProvider } from '../src/contexts/Toasty'
-import { Provider} from 'next-auth/client'
+import { Provider } from 'next-auth/client'
 import theme from '../src/theme'
 
 export default function MyApp(props) {
