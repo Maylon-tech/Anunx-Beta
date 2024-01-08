@@ -1,5 +1,5 @@
 import React from 'react'
-import TemplateDefault from '../../src/templates/Default'
+
 import {
     Container,
     Box,
@@ -11,10 +11,15 @@ import {
     CardMedia,
     Avatar
 } from '@mui/material'
-import theme from '../../src/theme'
 import Carousel from 'react-material-ui-carousel'
 
-const product = () => {
+import theme from '../../../src/theme'
+import TemplateDefault from '../../../src/templates/Default'
+import dbConnect from '../../../src/utils/dbConnect'
+import ProductsModel from '../../../src/models/products'
+import { formatCurrency } from '../../../src/utils/currency'
+
+const Product = ({ product }) => {
   return (
     <TemplateDefault>
         <Container maxWidth="lg">
@@ -36,24 +41,19 @@ const product = () => {
                                 }
                             }}
                         >
-                            <Card sx={{
-                                height:'100%'                            
-                            }}>
-                                <CardMedia 
-                                    sx={{ paddingTop: '56%' }}
-                                    image="https://source.unsplash.com/random?a=1"
-                                    title="Titulo da Imagem"
-                                />
-                            </Card>
-                            <Card sx={{
-                                height:'100%'                            
-                            }}>
-                                <CardMedia 
-                                    sx={{ paddingTop: '56%' }}
-                                    image="https://source.unsplash.com/random?a=2"
-                                    title="Titulo da Imagem"
-                                />
-                            </Card>
+                            {
+                                product.files.map(file => (
+                                    <Card key={file.name} sx={{
+                                        height:'100%'                            
+                                    }}>
+                                        <CardMedia 
+                                            sx={{ paddingTop: '56%' }}
+                                            image={`/uploads/${file.name}`}
+                                            title={file.title}
+                                        />
+                                    </Card>
+                                ))
+                            }                        
                         </Carousel>
                     </Box>
 
@@ -63,10 +63,11 @@ const product = () => {
                         padding: theme.spacing(3),
                         marginBottom: theme.spacing(3),
                     }}>
-                        <Typography component="span" variant="caption">Publicado 16 abril de 2022</Typography>
-                        <Typography component="h4" variant='h4'>Monitor LG</Typography>
-                        <Typography component="h4" variant='h4' sx={{ fontWeight: 'bold', marginBottom: '15px' }}>$ 45.00</Typography>
-                        <Chip label="Categoria" />
+                        {/* DESAFIO */}
+                        <Typography component="span" variant="caption">Publicado 16 abril de 2022</Typography>   
+                        <Typography component="h4" variant='h4'>{product.title}</Typography>
+                        <Typography component="h4" variant='h4' sx={{ fontWeight: 'bold', marginBottom: '15px' }}>{formatCurrency(product.price)}</Typography>
+                        <Chip label={product.category} />
                     </Box>
 
                     <Box sx={{
@@ -76,12 +77,7 @@ const product = () => {
                     }}>
                         <Typography component="h6" variant='h6'>Descrição</Typography>
                         <Typography component="p" variant='body2'>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Magni consequuntur odio pariatur velit esse, 
-                            asperiores alias nobis illo ea culpa accusamus.
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Magni consequuntur odio pariatur velit esse, 
-                            asperiores alias nobis illo ea culpa accusamus.
+                            {product.description}
                         </Typography>
                     </Box>
                 </Grid>
@@ -95,14 +91,16 @@ const product = () => {
                     }}>
                         <CardHeader
                             avatar={
-                                <Avatar>M</Avatar>
+                                <Avatar src={product.user.image}>
+                                    { product.user.image || product.user.name[0] }
+                                </Avatar>
                             }
-                            title="Nemoto Mailon"
-                            subheader="Nemoto@gmail.com"
+                            title={product.user.name}
+                            subheader={product.user.email}
                         />
                         <CardMedia 
-                            image=""
-                            title="Nemoto Mailon"
+                            image={product.user.image}
+                            title={product.user.name}
                         />
                     </Card>
 
@@ -114,7 +112,10 @@ const product = () => {
                             marginBottom: theme.spacing(3),
                         }}
                     >
-                        <Typography component="h6" variant='h6'>Localização</Typography>
+                        {/* DESAFIO */}
+                        <Typography component="h6" variant='h6'>
+                            Localização
+                        </Typography>
                     </Box>
                 </Grid>
             </Grid>
@@ -123,4 +124,20 @@ const product = () => {
   )
 }
 
-export default product
+
+export async function getServerSideProps({ query }) {
+    const { id } = query
+
+    await dbConnect()
+
+    const product = await ProductsModel.findOne({ _id: id })
+
+    return {
+        props: {
+            product: JSON.parse(JSON.stringify(product))
+        }
+    }
+}
+
+
+export default Product

@@ -31,7 +31,6 @@ const schema = new mongoose.Schema({
         image: String,
     },
     files: [filesSchema],
-    default: '',
 })
 
 export default mongoose.models.users || mongoose.model('products', schema)
