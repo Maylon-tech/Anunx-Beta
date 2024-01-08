@@ -157,4 +157,11 @@ const Signin = () => {
   )
 }
 
+
 export default Signin
+
+// Signin.getServerSideProps = async () => {
+//   return (
+//     APP_URL: process.env.APP_URL,
+//   )
+// }

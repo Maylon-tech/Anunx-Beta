@@ -17,7 +17,9 @@ const Home = () => {
     return (
         <TemplateDefault>
             <Container maxWidth="md" sx={{ padding:'1rem'}}>
-                <Typography component="h1" variant='h3' align='center' color="textPrimary">O que deseja encontrar?</Typography>
+                <Typography component="h1" variant='h3' align='center' color="textPrimary">
+                    O que deseja encontrar?
+                </Typography>
                 <Paper sx={{
                     display:'flex',
                     justifyContent:'center',

@@ -6,8 +6,12 @@ import {
 } from '@mui/material'
 import TemplateDefault from '../../src/templates/Default'
 import Card from '../../src/components/Card'
+import { getSession } from 'next-auth/client'
+import { dbConnect } from '../../src/utils/dbConnect'
+import { formatCurrency } from '../../src/utils/currency'
 
-export default function Home() {
+const Home = ({ products }) => {
+
   return (
     <TemplateDefault>
       <Container maxWidth="sm">
@@ -22,80 +26,54 @@ export default function Home() {
    
       <Container amxWidth="md">
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={6} md={4}>
-            <Card 
-              image="https://source.unsplash.com/random"
-              title="PlayStatio 4"
-              subtitle="567.00"
-              actions={
-                <>
-                  <Button size="small" color="primary">
-                      Editar
-                  </Button>
-                  <Button size="small" color="primary">
-                      Remover
-                  </Button>
-                </>
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <Card 
-                image="https://source.unsplash.com/random"
-                title="XBox 360"
-                subtitle="452.00"
-                actions={
-                  <>
-                    <Button size="small" color="primary">
-                        Editar
-                    </Button>
-                    <Button size="small" color="primary">
-                        Remover
-                    </Button>
-                  </>
-                }
-              />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <Card 
-                image="https://source.unsplash.com/random"
-                title="Keyboard Reload"
-                subtitle="378.00"
-                actions={
-                  <>
-                    <Button size="small" color="primary">
-                        Editar
-                    </Button>
-                    <Button size="small" color="primary">
-                        Remover
-                    </Button>
-                  </>
-                }
-              />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <Card 
-                image="https://source.unsplash.com/random"
-                title="Monitor LG"
-                subtitle="241.00"
-                actions={
-                  <>
-                    <Button size="small" color="primary">
-                        Editar
-                    </Button>
-                    <Button size="small" color="primary">
-                        Remover
-                    </Button>
-                  </>
-                }
-              />
-          </Grid>
-
+          {
+            products.map(product => (
+              <Grid key={product._id} item xs={12} sm={6} md={4}>
+                <Card 
+                  image={`/uploads/${product.files[0].name}`}
+                  title={product.title}
+                  subtitle={formatCurrency(product.price)}
+                  actions={
+                    <>
+                      <Button size="small" color="primary">
+                          Editar
+                      </Button>
+                      <Button size="small" color="primary">
+                          Remover
+                      </Button>
+                    </>
+                  }
+                />
+              </Grid>
+            ))
+          }         
         </Grid>
       </Container>
     </TemplateDefault>
   )
 }
+
+// Indicacao _ primeira Parte
+Home.requireAuth = true
+
+// Consultar o Banco - usando o ProductsModel.
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req })
+
+  // connecta com Banco de Dados
+  await dbConnect()
+
+  const products = await ProductsModel.find({
+    'user.id': session.userId
+  })
+
+    return {
+      props: {
+        // passa para string e depois faz o Parse. (o que vem do MOngo)
+        products: JSON.parse(JSON.stringify(products))
+      }
+    }
+}
+
+
+export default Home 

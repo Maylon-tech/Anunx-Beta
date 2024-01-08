@@ -17,7 +17,7 @@ export default NextAuth({
 
             async authorize(credentials) {
                 
-                const res = await axios.post('http://localhost:3000/api/auth/signin', credentials)
+                const res = await axios.post(`${process.env.APP_URL}/api/auth/signin`, credentials)
                 // Busca dados do Usuario.
                 const user = res.data
 
@@ -45,6 +45,21 @@ export default NextAuth({
     // Fator de Seguranca
     jwt: {
         secret: process.env.JWT_TOKEN
+    },
+
+        // Assim que fazer Login, o Callback sera executado. 
+    callbacks: {
+        async jwt (token, user) {
+            if (user) {
+                token.uid = user.id
+            }
+            return Promise.resolve(token)
+        },
+
+        async session(session, user) {
+            session.userId = user.uid
+            return session
+        }
     },
 
   database: process.env.MONGODB_URI,
